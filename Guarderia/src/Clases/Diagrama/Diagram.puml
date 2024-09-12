@@ -1,0 +1,102 @@
+@startuml
+
+class Niño {
+  + int id
+  + String nombre
+  + Date fechaNacimiento
+  + Date fechaIngreso
+  - Date fechaBaja
+  + List<PersonaAutorizada> personasAutorizadas
+  + List<Alergia> alergias
+  + List<Asistencia> asistencias
+  + List<Comida> comidas
+  + List<CargoMensual> cargosMensuales
+}
+
+class PersonaAutorizada {
+  + String dni
+  + String nombre
+  + String direccion
+  + String telefono
+  + String relacionConElNiño
+  + List<Niño> niñosAutorizados
+}
+
+class Alergia {
+  + int idNiño
+  + String idIngrediente
+  + Date fechaRegistro
+  + Niño niño
+  + Ingrediente ingrediente
+}
+
+class Ingrediente {
+  + String idIngrediente
+  + String descripcion
+  + List<Alergia> alergias
+}
+
+class Comida {
+  + int idNiño
+  + int idMenu
+  + Date fecha
+  + Date hora
+  + Niño niño
+  + Menu menu
+}
+
+class Menu {
+  + int idMenu
+  + String descripcion
+  + List<Comida> comidas
+}
+
+class Plato {
+  + String idPlato
+  + String descripcion
+  + List<Ingrediente> ingredientes
+}
+
+class Asistencia {
+  + int idNiño
+  + Date fecha
+  + Date horaEntrada
+  + Date horaSalida
+  + Niño niño
+}
+
+class CargoMensual {
++ int idNiño
++ Date fecha
++ double costeFijoMensual
++ double costeComidas
++ double total
++ Niño niño
+}
+
+
+
+Niño --> PersonaAutorizada : "0..* personasAutorizadas"
+Niño --> Alergia : "0..* alergias"
+Niño --> Asistencia : "0..* asistencias"
+Niño --> Comida : "0..* comidas"
+Niño --> CargoMensual : "0..* cargosMensuales"
+
+PersonaAutorizada --> Niño : "0..* niñosAutorizados"
+
+Alergia --> Niño : "1 niño"
+Alergia --> Ingrediente : "1 ingrediente"
+
+Ingrediente --> Alergia : "0..* alergias"
+
+Comida --> Niño : "1 niño"
+Comida --> Menu : "1 menú"
+
+Menu --> Comida : "0..* comidas"
+
+Plato --> Ingrediente : "0..* ingredientes"
+
+Asistencia --> Niño : "1 niño"
+
+CargoMensual --> Niño : "1 niño"
+@enduml
